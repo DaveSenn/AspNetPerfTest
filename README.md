@@ -13,13 +13,16 @@ Setup is local because I am too lazy to wrestle Docker for this project.
 Javascript/Markup - React **fe_react** (run with `npm start`)
 
 ### backends:
-Python 3 - Sanic **be_sanic** (`pip install -r requirements.txt`; `python server.py`)
-
-Javascript - Fastify **be_fastify** (`npm install`; `node server.js`)
 
 Go - **be_go** (`go run server.go`)
 
-Rust - Actix-Web **be_actix** (`cargo run` or `cargo build --release;target/release/todolist`)
+Java - Jooby - **be_java_jooby** ()
+
+Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
+
+Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
+
+Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target/release/todolist`)
 
 ### setup:
 
