@@ -16,8 +16,6 @@ Javascript/Markup - React **fe_react** (run with `npm start`)
 
 Go - **be_go** (`go run server.go`)
 
-Java - Jooby - **be_java_jooby** ()
-
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
