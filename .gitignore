@@ -8,6 +8,7 @@ go.sum
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+.vscode/
 project.lock.json
 project.fragment.lock.json
 artifacts/
