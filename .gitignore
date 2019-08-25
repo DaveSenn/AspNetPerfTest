@@ -4,3 +4,10 @@ yarn.lock
 __pycache__
 target/
 go.sum
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+project.lock.json
+project.fragment.lock.json
+artifacts/

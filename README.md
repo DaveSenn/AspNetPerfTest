@@ -14,6 +14,8 @@ Javascript/Markup - React **fe_react** (run with `npm start`)
 
 ### backends:
 
+C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run`)
+
 Go - **be_go** (`go run server.go`)
 
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
@@ -26,27 +28,33 @@ Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target
 
 Install requirements locally:
 
-    Postgresql 10.0+ (Though any 9.x should be fine)
-    Node 10.15+
+    Docker
+    Dotnet Core 2.2
+    Go 1.12+
     Python 3.6+
         Pip 9.0+
-    Go 1.12+
+    Node 10.15+
     Rust 1.34+
 
-Setup postgres locally with a database (todolist) and user.
+Setup postgres via docker (in the database directory).
+
+    bash setup.sh
+    bash run.sh
+    bash stop.sh
+
 Set environment variables for the user/password/host:
     
     DEV_PG_USER
     DEV_PG_PASSWORD
     DEV_PG_HOST
 
-Note on some systems you made need to run the equivalent of:
-
-    sudo apt install libpq-dev
-
 If you get a `cannot find -lpq` error when running `cargo`.
 
 Optionally run `python initialize_db.py` in be_sanic to create the tasks table.
+(Or create the table yourself in your preferred manner).
+Note on some systems you made need to run the equivalent of:
+
+    sudo apt install libpq-dev
 
 ### running:
 Pick a backend, run it, then start up the front end and away you go.
