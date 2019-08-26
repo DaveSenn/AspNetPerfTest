@@ -21,7 +21,7 @@ namespace TodoList.Controllers
         public async Task<ActionResult<Dictionary<string, dynamic>>> Get()
         {
             Dictionary<string, dynamic> tasks = new Dictionary<string, dynamic>();
-            IEnumerable<TodoTask> results = await _context.TodoTasks.ToListAsync();
+            IEnumerable<TodoTask> results = await _context.TodoTasks.OrderBy(task => task.Priority).ToListAsync();
             tasks.Add("tasks", results);
             tasks.Add("position", 0);
             tasks.Add("length", results.Count());
