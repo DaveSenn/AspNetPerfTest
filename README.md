@@ -22,7 +22,7 @@ Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
-Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target/release/todolist`)
+Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target/release/be_actix`)
 
 ### setup:
 
