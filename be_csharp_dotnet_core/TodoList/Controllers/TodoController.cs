@@ -30,22 +30,24 @@ namespace TodoList.Controllers
 
         // POST tasks
         [HttpPost]
-        public async Task<ActionResult<TodoTask>> Post(TodoTask task)
+        public async Task<ActionResult<Dictionary<string, TodoTask>>> Post(TodoTask task)
         {
             _context.TodoTasks.Add(task);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(task.Text, new { id = task.Id }, task);
+            return new Dictionary<string, TodoTask>() {
+                { "task", task }
+            };
         }
 
         // PUT tasks
         [HttpPut()]
-        public async Task<ActionResult<TodoTask>> Put(TodoTask task)
+        public async Task<ActionResult<Dictionary<string, TodoTask>>> Put(TodoTask task)
         {
             _context.Entry(task).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
-            return AcceptedAtAction(task.Text, new { id = task.Id }, task);
+            return new Dictionary<string, TodoTask>() {
+                { "task", task }
+            };
         }
 
         // DELETE tasks
