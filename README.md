@@ -50,11 +50,11 @@ Set environment variables for the user/password/host:
 
 If you get a `cannot find -lpq` error when running `cargo`.
 
+    sudo apt install libpq-dev
+
 Optionally run `python initialize_db.py` in be_sanic to create the tasks table.
 (Or create the table yourself in your preferred manner).
 Note on some systems you made need to run the equivalent of:
-
-    sudo apt install libpq-dev
 
 ### running:
 Pick a backend, run it, then start up the front end and away you go.
