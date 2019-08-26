@@ -7,8 +7,6 @@ The frontend is independent of the backend used as long as it implements the
 correct API.
 The tests are also independend of the backend used.
 
-Setup is local because I am too lazy to wrestle Docker for this project.
-
 ### frontend:
 Javascript/Markup - React **fe_react** (run with `npm start`)
 
