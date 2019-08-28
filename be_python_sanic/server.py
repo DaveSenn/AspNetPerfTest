@@ -11,7 +11,8 @@ database = Database(
     'postgresql://{}:{}@{}/todolist'.format(
         os.environ['DEV_PG_USER'], os.environ['DEV_PG_PASSWORD'],
         os.environ['DEV_PG_HOST']
-    )
+    ),
+    min_size=5, max_size=20
 )
 
 
