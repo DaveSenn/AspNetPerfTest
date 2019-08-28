@@ -2,6 +2,7 @@ const fastify = require('fastify')({ logger: false })
 const connectionString = 'postgres://' + process.env.DEV_PG_USER + ':' + 
   process.env.DEV_PG_PASSWORD + '@' + process.env.DEV_PG_HOST + '/todolist'
 
+// fastify-postgres uses pooling under the hood.
 fastify.register(require('fastify-postgres'), {
   connectionString: connectionString
 })
