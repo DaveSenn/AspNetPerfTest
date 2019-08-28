@@ -23,7 +23,7 @@ namespace TodoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContextPool<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(options =>
                 {
                     options.AddPolicy(TodolistOrigins,
@@ -32,6 +32,7 @@ namespace TodoList
                         CorsPolicyBuilder corsPolicyBuilder = builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
                     });
                 });
+            // For 3.0+ add argument `option => option.EnableEndpointRouting = false` to AddMvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
