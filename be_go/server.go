@@ -92,6 +92,8 @@ func update_task(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	connection := connect()
+    connection.SetMaxOpenConns(5)
+    connection.SetMaxIdleConns(5)
 	defer connection.Close()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/tasks", func (w http.ResponseWriter, r *http.Request) {
