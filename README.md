@@ -27,7 +27,7 @@ Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target
 Install requirements locally:
 
     Docker
-    Dotnet Core 2.2
+    Dotnet Core 3.0
     Go 1.12+
     Python 3.6+
         Pip 9.0+
