@@ -55,6 +55,7 @@ Optionally run `python initialize_db.py` in be_sanic to create the tasks table.
 Note on some systems you made need to run the equivalent of:
 
 ### running:
+Start the db (bash database/run.sh).
 Pick a backend, run it, then start up the front end and away you go.
 
 ### tests:
