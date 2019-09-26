@@ -52,6 +52,10 @@ func delete_tasks(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
+func get_status(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "ok")
+}
+
 func get_tasks(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	results := map[string]interface{}{}
 	var tasks []Task
@@ -96,6 +100,12 @@ func main() {
     connection.SetMaxIdleConns(5)
 	defer connection.Close()
 	mux := http.NewServeMux()
+	mux.HandleFunc("/status", func (w http.ResponseWriter, r *http.Request) {
+		switch  r.Method {
+		case "GET":
+			get_status(w, r)
+		}
+	})
 	mux.HandleFunc("/tasks", func (w http.ResponseWriter, r *http.Request) {
 		switch  r.Method {
 		case "DELETE":

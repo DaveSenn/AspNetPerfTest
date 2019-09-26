@@ -12,7 +12,7 @@ namespace TodoList
 {
     public class Startup
     {
-        readonly string TodolistOrigins = "_TodolistOrigins";
+        readonly string TodoListOrigins = "_TodolistOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -27,7 +27,7 @@ namespace TodoList
             services.AddDbContextPool<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(options =>
                 {
-                    options.AddPolicy(TodolistOrigins,
+                    options.AddPolicy(TodoListOrigins,
                     builder =>
                     {
                         CorsPolicyBuilder corsPolicyBuilder = builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
@@ -48,7 +48,7 @@ namespace TodoList
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors(TodolistOrigins);
+            app.UseCors(TodoListOrigins);
             app.UseHttpsRedirection();
             app.UseMvc();
         }

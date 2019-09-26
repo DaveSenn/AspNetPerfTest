@@ -18,6 +18,10 @@ fastify.delete('/tasks', async (request, reply) => {
   return { status: 'success' }
 })
 
+fastify.get('/status', async (request, reply) => {
+  reply.send('ok')
+})
+
 fastify.get('/tasks', async (request, reply) => {
   var results = {tasks: [], position: 0, len: 0}
   const client = await fastify.pg.connect()

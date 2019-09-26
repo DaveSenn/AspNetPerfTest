@@ -9,6 +9,7 @@ go.sum
 [Rr]elease/
 [Rr]eleases/
 .vscode/
+obj/
 project.lock.json
 project.fragment.lock.json
 artifacts/

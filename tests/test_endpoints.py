@@ -80,3 +80,7 @@ def test_put(db_connection):
         })
     assert r.status_code == 200
     assert r.json()['task']['priority'] == 2
+
+def test_status():
+    r = requests.get('http://localhost:8000/status')
+    assert r.text == 'ok'

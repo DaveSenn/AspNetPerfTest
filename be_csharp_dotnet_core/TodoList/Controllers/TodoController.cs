@@ -57,4 +57,18 @@ namespace TodoList.Controllers
             _context.Database.ExecuteSqlCommand("delete from tasks");
         }
     }
+
+    [Route("/status")]
+    [ApiController]
+    public class StatusController : ControllerBase
+    {
+        public StatusController() {}
+
+        // GET tasks
+        [HttpGet]
+        public async Task<string> Get()
+        {
+            return "ok";
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import os
 from databases import Database
 from sanic import Sanic
-from sanic.response import json
+from sanic.response import json, text
 from models import tasks
 from sanic_cors import CORS
 
@@ -30,6 +30,11 @@ async def close_db(app, loop):
 async def tasks_delete(request):
     await database.execute(query=tasks.delete())
     return json({'status': 'success'})
+
+
+@app.route('/status', methods=['GET'])
+async def status_get(request):
+    return text('ok')
 
 
 @app.route('/tasks', methods=['GET'])

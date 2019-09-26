@@ -2,17 +2,18 @@
 
 A simple To Do List app with multiple backends.
 
-Each backend supports basic CRUD.
+Each backend supports basic CRUD and enables permissive CORS for easy local dev.
 The frontend is independent of the backend used as long as it implements the 
 correct API.
-The tests are also independend of the backend used.
+The tests are also independend of the backend used - so adding and validating a
+new backend is easy.
 
 ### frontend:
 Javascript/Markup - React **fe_react** (run with `npm start`)
 
 ### backends:
 
-C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run`)
+C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp3.0/TodoList`)
 
 Go - **be_go** (`go run server.go`)
 

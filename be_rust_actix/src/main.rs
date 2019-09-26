@@ -44,6 +44,11 @@ fn tasks_delete(pool: web::Data<Pool>) -> HttpResponse {
     HttpResponse::Ok().json(json!({"status": "success"}))
 }
 
+#[get("/status")]
+fn status_get(_req: HttpRequest) -> HttpResponse {
+    HttpResponse::Ok().body("ok")
+}
+
 #[get("/tasks")]
 fn tasks_get(_req: HttpRequest, pool: web::Data<Pool>) -> HttpResponse {
     use self::schema::tasks::dsl::*;
@@ -123,6 +128,7 @@ fn main() -> std::io::Result<()> {
                 http::header::ACCEPT])
             .allowed_header(http::header::CONTENT_TYPE)
             .max_age(3600),)
+        .service(status_get)
         .service(tasks_delete)
         .service(tasks_get)
         .service(tasks_post)        
