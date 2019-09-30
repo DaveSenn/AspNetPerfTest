@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using TodoList.Models;
 using Microsoft.Extensions.Hosting;
 
@@ -24,7 +23,6 @@ namespace TodoList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(options =>
                 {
                     options.AddPolicy(TodoListOrigins,
