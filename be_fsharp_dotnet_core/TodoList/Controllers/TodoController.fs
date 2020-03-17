@@ -20,8 +20,8 @@ type TodoController (configuration:IConfiguration) =
         async {
             let tasks = Dictionary<string,obj>()
             let connection =  new NpgsqlConnection(_connectionString)
-            Async.AwaitTask (connection.OpenAsync()) |> Async.RunSynchronously
-            let results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc")) |> Async.RunSynchronously
+            do! Async.AwaitTask (connection.OpenAsync())
+            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc"))
             tasks.Add("tasks", results)
             tasks.Add("position", 0)
             tasks.Add("length", results.Count())
@@ -33,7 +33,7 @@ type TodoController (configuration:IConfiguration) =
         async {
             let tasks = Dictionary<string,obj>()
             let connection =  new NpgsqlConnection(_connectionString)
-            Async.AwaitTask (connection.OpenAsync()) |> Async.RunSynchronously
+            do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"INSERT into tasks (text, priority) VALUES (@Text, @Priority)";
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
             let task = Dictionary<string, obj>()
@@ -47,7 +47,7 @@ type TodoController (configuration:IConfiguration) =
         async {
             let tasks = Dictionary<string,obj>()
             let connection =  new NpgsqlConnection(_connectionString)
-            Async.AwaitTask (connection.OpenAsync()) |> Async.RunSynchronously
+            do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id";
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
             let task = Dictionary<string, obj>()
