@@ -15,6 +15,8 @@ Javascript/Markup - React **fe_react** (run with `npm start`)
 
 C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp3.0/TodoList`)
 
+F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp3.0/TodoList`)
+
 Go - **be_go** (`go run server.go`)
 
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
