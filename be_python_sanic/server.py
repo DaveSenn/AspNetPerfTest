@@ -5,7 +5,7 @@ from sanic.response import json, text
 from models import tasks
 from sanic_cors import CORS
 
-app = Sanic()
+app = Sanic('todolist')
 CORS(app, automatic_options=True)
 database = Database(
     'postgresql://{}:{}@{}/todolist'.format(
