@@ -23,6 +23,8 @@ Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
+Python 3 - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvicorn server:app`)
+
 Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target/release/be_actix`)
 
 ### setup:
@@ -53,7 +55,7 @@ If you get a `cannot find -lpq` error when running `cargo`.
 
     sudo apt install libpq-dev
 
-Optionally run `python initialize_db.py` in be_sanic to create the tasks table.
+Optionally run `python initialize_db.py` in database/ to create the tasks table.
 (Or create the table yourself in your preferred manner).
 Note on some systems you made need to run the equivalent of:
 
