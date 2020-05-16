@@ -9,7 +9,7 @@ The tests are also independend of the backend used - so adding and validating a
 new backend is easy.
 
 ### frontend:
-Javascript/Markup - React **fe_react** (run with `npm start`)
+Javascript/Markup - React **fe_javascript_react** (run with `npm start`)
 
 ### backends:
 

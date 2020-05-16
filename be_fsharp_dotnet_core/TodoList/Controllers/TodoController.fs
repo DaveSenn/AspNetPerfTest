@@ -16,15 +16,16 @@ type TodoController (configuration:IConfiguration) =
     let _connectionString = configuration.GetConnectionString "DefaultConnection"
 
     [<HttpGet>]
-    member __.Get() : Task<Dictionary<string,obj>> =
-        async {
-            let tasks = Dictionary<string,obj>()
+    member __.Get() : Task<TaskList> =
+        async {            
             let connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc"))
-            tasks.Add("tasks", results)
-            tasks.Add("position", 0)
-            tasks.Add("length", results.Count())
+            let tasks = {
+                Tasks=List.ofSeq results;
+                Position=0;
+                Length=results.Count()
+            }
             do! Async.AwaitTask (connection.CloseAsync())
             return tasks
         } |> Async.StartAsTask
