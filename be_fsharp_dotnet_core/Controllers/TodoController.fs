@@ -7,7 +7,7 @@ open System.Linq
 open System.Threading.Tasks
 open Dapper
 open Npgsql
-open Todolist.Models
+open TodoList.Models
 
 [<ApiController>]
 [<Route("/tasks")>]
@@ -35,12 +35,12 @@ type TodoController (configuration:IConfiguration) =
         async {
             let connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"INSERT into tasks (text, priority) VALUES (@Text, @Priority)";
+            let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
-            let task = Dictionary<string, obj>()
-            task.Add("task", task)
+            let taskHolder = Dictionary<string, obj>()
+            taskHolder.Add("task", task)
             do! Async.AwaitTask (connection.CloseAsync())
-            return task
+            return taskHolder
         } |> Async.StartAsTask
 
 
@@ -49,12 +49,12 @@ type TodoController (configuration:IConfiguration) =
         async {
             let connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id";
+            let sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id"
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
-            let task = Dictionary<string, obj>()
-            task.Add("task", task)
+            let taskHolder = Dictionary<string, obj>()
+            taskHolder.Add("task", task)
             do! Async.AwaitTask (connection.CloseAsync())
-            return task
+            return taskHolder
         } |> Async.StartAsTask
 
     [<HttpDelete>]

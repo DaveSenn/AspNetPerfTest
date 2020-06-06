@@ -1,4 +1,4 @@
-namespace Todolist.Models
+namespace TodoList.Models
 
 // Naming TodoTask to avoid name conflict with threading Task
 type TodoTask (id, text, priority) =

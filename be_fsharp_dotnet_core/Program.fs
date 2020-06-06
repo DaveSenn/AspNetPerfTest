@@ -13,5 +13,6 @@ module Program =
 
     [<EntryPoint>]
     let main args =
+        printfn "Running on localhost port 8000"
         CreateHostBuilder(args).Build().Run()
         0
