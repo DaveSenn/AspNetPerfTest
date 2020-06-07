@@ -77,6 +77,7 @@ Of course one still needs to consider mocking, test databases, and other
 concerns I didn't feel like putting the time into for something like this.
 
 Run `py.test` in the `tests/py_pytest` directory after `pip install -r requirements.txt`
+
 Or run `dotnet run` in the `tests/fs_expecto` directory
 
 ### status:
