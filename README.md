@@ -13,9 +13,9 @@ Javascript/Markup - React **fe_javascript_react** (run with `npm start`)
 
 ### backends:
 
-C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp3.0/TodoList`)
+C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
 
-F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp3.0/TodoList`)
+F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
 
 Go - **be_go** (`go run server.go`)
 
@@ -79,7 +79,9 @@ new feature in each language/framework or refactor and have tests ready to go.
 Of course one still needs to consider mocking, test databases, and other
 concerns I didn't feel like putting the time into for something like this.
 
-Run `py.test` in the `tests` directory after `pip install -r requirements.txt`
+Run `py.test` in the `tests/py_pytest` directory after `pip install -r requirements.txt`
+
+Or run `dotnet run` in the `tests/fs_expecto` directory
 
 ### status:
 This is just for messing around. I might spruce up the error handling, tests,
