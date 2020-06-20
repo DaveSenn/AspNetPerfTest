@@ -1,6 +1,6 @@
 ## To Do List App
 
-A simple To Do List app with multiple backends.
+A simple Todo List app with multiple backends.
 
 Each backend supports basic CRUD and enables permissive CORS for easy local dev.
 The frontend is independent of the backend used as long as it implements the 
