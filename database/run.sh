@@ -1,1 +1,1 @@
-docker run --rm   --name pg-docker -e POSTGRES_USER=tdl_user -e POSTGRES_PASSWORD=secretz -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+docker run --rm   --name pg-docker -e POSTGRES_USER=$DEV_PG_USER -e POSTGRES_PASSWORD=$DEV_PG_PASSWORD -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres

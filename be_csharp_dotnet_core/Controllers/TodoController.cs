@@ -15,7 +15,12 @@ namespace TodoList.Controllers
     {
 
         private readonly string _connectionString;
-        public TodoController(IConfiguration configuration) => _connectionString = configuration.GetConnectionString("DefaultConnection");
+        public TodoController(IConfiguration configuration) => _connectionString = String.Format(
+            configuration.GetConnectionString("DefaultConnection"),
+            Environment.GetEnvironmentVariable("DEV_PG_HOST"),
+            Environment.GetEnvironmentVariable("DEV_PG_USER"),
+            Environment.GetEnvironmentVariable("DEV_PG_PASSWORD")
+        );
 
         // GET tasks
         [HttpGet]

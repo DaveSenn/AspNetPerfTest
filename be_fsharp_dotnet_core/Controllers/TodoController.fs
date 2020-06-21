@@ -2,6 +2,7 @@
 
 open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
+open System
 open System.Collections.Generic
 open System.Linq
 open System.Threading.Tasks
@@ -13,7 +14,11 @@ open TodoList.Models
 [<Route("/tasks")>]
 type TodoController (configuration:IConfiguration) =
     inherit ControllerBase()
-    let _connectionString = configuration.GetConnectionString "DefaultConnection"
+    let _connectionString = String.Format(
+                                    configuration.GetConnectionString "DefaultConnection",
+                                    Environment.GetEnvironmentVariable "DEV_PG_HOST",
+                                    Environment.GetEnvironmentVariable "DEV_PG_USER",
+                                    Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
 
     [<HttpGet>]
     member __.Get() : Task<TaskList> =

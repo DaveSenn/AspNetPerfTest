@@ -1,11 +1,17 @@
 module Data
+open System
 open Dapper
 open Npgsql
 open TodoList.Models
 // Data test fixtures & utils
 
 let GetConnection = 
-    new NpgsqlConnection("Host=localhost;Port=5432;Username=tdl_user;Password=secretz;Database=todolist;")
+    let _connectionString = String.Format(
+                                "Host={0};Port=5432;Username={1};Password={2};Database=todolist;",
+                                Environment.GetEnvironmentVariable "DEV_PG_HOST",
+                                Environment.GetEnvironmentVariable "DEV_PG_USER",
+                                Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
+    new NpgsqlConnection(_connectionString)
 
 let AddTask text priority =
     let connection = GetConnection
