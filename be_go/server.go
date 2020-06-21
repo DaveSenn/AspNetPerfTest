@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"database/sql"
-  	"encoding/json"
+	"encoding/json"
 	"net/http"
 	"os"
 	_ "github.com/lib/pq"
-    "github.com/rs/cors"
+	"github.com/rs/cors"
 )
 
 type Task struct {
@@ -19,7 +19,7 @@ type Task struct {
 func connect() *sql.DB {
 	connectionString := fmt.Sprintf("host=%s user=%s password=%s " +
 	" dbname=todolist sslmode=disable", os.Getenv("DEV_PG_HOST"),
-    os.Getenv("DEV_PG_USER"), os.Getenv("DEV_PG_PASSWORD"))
+	os.Getenv("DEV_PG_USER"), os.Getenv("DEV_PG_PASSWORD"))
 	db, err := sql.Open("postgres", connectionString)
 	if err != nil { panic(err) }
 	return db
@@ -96,8 +96,8 @@ func update_task(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	connection := connect()
-    connection.SetMaxOpenConns(5)
-    connection.SetMaxIdleConns(5)
+	connection.SetMaxOpenConns(5)
+	connection.SetMaxIdleConns(5)
 	defer connection.Close()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/status", func (w http.ResponseWriter, r *http.Request) {
@@ -119,11 +119,11 @@ func main() {
 		}
 	})
 	handler := cors.New(cors.Options{
-        AllowedOrigins:   []string{"*"},
-        AllowedMethods:   []string{
-        	http.MethodGet, http.MethodPost, http.MethodDelete},
-        AllowCredentials: true,
-    }).Handler(mux)
-    fmt.Println("Server listening on 8000")
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{
+			http.MethodGet, http.MethodPost, http.MethodDelete},
+			AllowCredentials: true,
+		}).Handler(mux)
+	fmt.Println("Server listening on 8000")
 	http.ListenAndServe(":8000", handler)
 }
