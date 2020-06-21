@@ -19,8 +19,6 @@ F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet bu
 
 F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
 
-Go - **be_go** (`go run server.go`)
-
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
@@ -28,8 +26,6 @@ Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python
 Python 3 - Falcon **be_python_falcon** (`pip install -r requirements.txt`;`gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app`)
 
 Python 3 - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvicorn server:app`)
-
-Rust - Actix-Web **be_rust_actix** (`cargo run` or `cargo build --release;target/release/be_actix`)
 
 ### setup:
 
