@@ -2,7 +2,6 @@ module TodoList.App
 
 open System
 open System.Collections.Generic
-open System.IO
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Cors.Infrastructure
@@ -144,10 +143,8 @@ let configureLogging (builder : ILoggingBuilder) =
 
 [<EntryPoint>]
 let main _ =
-    let contentRoot = Directory.GetCurrentDirectory()
     WebHostBuilder()
         .UseKestrel()
-        .UseContentRoot(contentRoot)
         .Configure(Action<IApplicationBuilder> configureApp)
         .ConfigureServices(configureServices)
         .ConfigureLogging(configureLogging)
