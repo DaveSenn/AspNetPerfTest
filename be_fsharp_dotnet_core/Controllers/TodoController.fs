@@ -54,7 +54,7 @@ type TodoController (configuration:IConfiguration) =
         async {
             let connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id"
+            let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", task)

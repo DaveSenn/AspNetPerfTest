@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace TodoList.Controllers
         public TodoController(IConfiguration configuration) => _connectionString = String.Format(
             configuration.GetConnectionString("DefaultConnection"),
             Environment.GetEnvironmentVariable("DEV_PG_HOST"),
+            Environment.GetEnvironmentVariable("DEV_PG_PORT"),
             Environment.GetEnvironmentVariable("DEV_PG_USER"),
             Environment.GetEnvironmentVariable("DEV_PG_PASSWORD")
         );
@@ -60,7 +62,7 @@ namespace TodoList.Controllers
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id";
+                var sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id";
                 await connection.ExecuteAsync(sql, task);
             }
             return new Dictionary<string, TodoTask>() {

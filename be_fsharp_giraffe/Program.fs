@@ -21,8 +21,9 @@ open TodoList.Models
 
 
 let connectionString = String.Format(
-                        "Host={0};Port=5432;Username={1};Password={2};Database=todolist;",
+                        "Host={0};Port={1};Username={2};Password={3};Database=todolist;",
                         Environment.GetEnvironmentVariable "DEV_PG_HOST",
+                        Environment.GetEnvironmentVariable "DEV_PG_PORT",
                         Environment.GetEnvironmentVariable "DEV_PG_USER",
                         Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
 
@@ -37,7 +38,7 @@ let taskGetHandler : HttpHandler =
         task {
             let connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc"))
+            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("SELECT * FROM tasks ORDER BY priority asc"))
             let taskList = List.ofSeq results
             let tasks = {
                 Tasks=taskList;
@@ -54,7 +55,7 @@ let taskPostHandler : HttpHandler =
             let connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
-            let todotask = ctx.BindModelAsync<TodoTask>().Result
+            let todotask = ctx.BindModelAsync<TodoTask>().Result // This will fail due to a bug in Giraffe
             Async.AwaitTask (connection.ExecuteAsync(sql, todotask)) |> Async.RunSynchronously |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", task)
@@ -67,9 +68,10 @@ let taskPutHandler : HttpHandler =
         task {
             let connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"UPDATE tasks SET (text = @Text, priority = @Priority) WHERE id = @Id"
-            let todotask = ctx.BindModelAsync<TodoTask>().Result
-            Async.AwaitTask (connection.ExecuteAsync(sql, todotask)) |> Async.RunSynchronously |> ignore
+            let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
+            let todotask = ctx.BindModelAsync<TodoTask>().Result // This will fail due to a bug in Giraffe
+            // A different way of doing the above:
+            connection.ExecuteAsync(sql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", task)
             do! Async.AwaitTask (connection.CloseAsync())
