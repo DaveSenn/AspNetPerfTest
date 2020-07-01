@@ -52,6 +52,7 @@ Set environment variables for the user/password/host:
     DEV_PG_USER
     DEV_PG_PASSWORD
     DEV_PG_HOST
+    DEV_PG_PORT
 
 If you get a `cannot find -lpq` error when running `cargo`.
 
