@@ -21,7 +21,7 @@ F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotne
 
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
-Kotlin - Jooby (Kooby) - **be_kotlin_jooby** (Recommend building through intellij idea or maven, run with `java -jar <path_to_jar>/TodoList.jar`)
+Kotlin - Jooby (Kooby) - **be_kotlin_jooby** (`gradle build`; `java -jar build/libs/TodoList-<version>.jar`)
 
 Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
