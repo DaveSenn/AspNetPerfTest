@@ -16,6 +16,8 @@ artifacts/
 .ionide/
 symbolCache.db
 .idea/
-out/
+.gradle/
+*.jar
+build/
 target/
 tmp/
