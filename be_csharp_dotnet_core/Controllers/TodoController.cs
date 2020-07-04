@@ -89,7 +89,7 @@ namespace TodoList.Controllers
 
         // GET tasks
         [HttpGet]
-        public async Task<string> Get()
+        public string Get()
         {
             return "ok";
         }
