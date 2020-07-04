@@ -20,15 +20,12 @@ let tests =
         test "Test get tasks" {
             let taskText = "check pants pocket"
             let taskId = AddTask taskText 1
-            try
-                let client = new HttpClient()
-                let resp = Async.AwaitTask (client.GetStringAsync("http://localhost:8000/tasks")) |> Async.RunSynchronously
-                let taskList = JsonConvert.DeserializeObject<MutableTaskList> resp
-                let tasks = taskList.Tasks |> Array.toList
-                let found = List.exists (fun (t:TodoTask) -> t.Text = taskText) tasks
-                Expect.isTrue found "Added element not found"
-            finally
-                RemoveTask taskId |> ignore
+            let client = new HttpClient()
+            let resp = Async.AwaitTask (client.GetStringAsync("http://localhost:8000/tasks")) |> Async.RunSynchronously
+            let taskList = JsonConvert.DeserializeObject<MutableTaskList> resp
+            let tasks = taskList.Tasks |> Array.toList
+            let found = List.exists (fun (t:TodoTask) -> t.Text = taskText) tasks
+            Expect.isTrue found "Added element not found"
         }
 
         test "Test post task" {

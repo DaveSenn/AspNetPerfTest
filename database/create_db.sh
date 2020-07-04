@@ -1,2 +1,2 @@
 export PGPASSWORD=$DEV_PG_PASSWORD
-createdb -h $DEV_PG_HOST -p 5432 -U $DEV_PG_USER todolist
+createdb -h $DEV_PG_HOST -p $DEV_PG_PORT -U $DEV_PG_USER $DEV_PG_DATABASE

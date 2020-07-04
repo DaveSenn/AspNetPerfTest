@@ -53,6 +53,8 @@ Set environment variables for the user/password/host:
     DEV_PG_PASSWORD
     DEV_PG_HOST
     DEV_PG_PORT
+    DEV_PG_DATABASE
+    DEV_PG_CONTAINER
 
 If you get a `cannot find -lpq` error when running `cargo`.
 
@@ -77,12 +79,17 @@ something drastic like switching frameworks.
 In the case of this specific project, I found it wonderful to be able to add a
 new feature in each language/framework or refactor and have tests ready to go.
 
-Of course one still needs to consider mocking, test databases, and other
-concerns I didn't feel like putting the time into for something like this.
+Run `test.sh` as follows:
 
-Run `py.test` in the `tests/py_pytest` directory after `pip install -r requirements.txt`
+```
+./test.sh dotnet run --project tests/fs_expecto/fs_expecto.fsproj 
+```
 
-Or run `dotnet run` in the `tests/fs_expecto` directory
+or
+
+```
+./test.sh py.test
+```
 
 ### status:
 This is just for messing around. I might spruce up the error handling, tests,

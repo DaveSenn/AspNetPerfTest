@@ -13,15 +13,11 @@ tasks = sqlalchemy.Table(
     sqlalchemy.Column('priority', sqlalchemy.Integer),
 )
 
-task_ids = []
-
 
 def add_task(connection, text='Super important task', priority=1):
     result = connection.execute(tasks.insert().values(
         text=text, priority=priority))
-    task_id = result.inserted_primary_key[0]
-    task_ids.append(task_id)
-    return task_id
+    return result.inserted_primary_key[0]  # task_id
 
 
 @pytest.fixture(scope='module')
@@ -36,15 +32,13 @@ def db_connection():
     connection = database.connect()
     yield connection
     # Teardown
-    print('Deleting: {}'.format(task_ids))
-    connection.execute(tasks.delete().where(tasks.c.id.in_(task_ids)))
     connection.close()
 
 
-# def test_delete(db_connection):
-#     add_task(db_connection)
-#     r = requests.delete('http://localhost:8000/tasks')
-#     assert r.status_code == 200
+def test_delete(db_connection):
+    add_task(db_connection)
+    r = requests.delete('http://localhost:8000/tasks')
+    assert r.status_code == 200
 
 
 def test_get(db_connection):
@@ -80,6 +74,7 @@ def test_put(db_connection):
         })
     assert r.status_code == 200
     assert r.json()['task']['priority'] == 2
+
 
 def test_status():
     r = requests.get('http://localhost:8000/status')

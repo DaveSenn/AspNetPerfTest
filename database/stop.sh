@@ -1,1 +1,1 @@
-docker stop pg-docker
+docker stop $DEV_PG_CONTAINER
