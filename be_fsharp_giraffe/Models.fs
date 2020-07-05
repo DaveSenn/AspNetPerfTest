@@ -1,10 +1,12 @@
 namespace TodoList.Models
 
 // Naming TodoTask to avoid name conflict with threading Task
-type TodoTask (id, text, priority) =
-    member val Id : int = id with get, set
-    member val Text : string = text with get, set
-    member val Priority : int = priority with get, set
+[<CLIMutable>]
+type TodoTask = {
+    Id : int
+    Text : string
+    Priority : int
+}
 
 type TaskList = {
     Tasks : TodoTask list

@@ -2,6 +2,7 @@ module TodoList.App
 
 open System
 open System.Collections.Generic
+open System.Text.Json
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Cors.Infrastructure
@@ -19,6 +20,8 @@ open TodoList.Models
 // Web app
 // ---------------------------------
 
+let jsonOptions = JsonSerializerOptions()
+jsonOptions.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
 
 let connectionString = String.Format(
                         "Host={0};Port={1};Username={2};Password={3};Database=todolist;",
@@ -55,10 +58,13 @@ let taskPostHandler : HttpHandler =
             let connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
-            let todotask = ctx.BindModelAsync<TodoTask>().Result // This will fail due to a bug in Giraffe
-            Async.AwaitTask (connection.ExecuteAsync(sql, todotask)) |> Async.RunSynchronously |> ignore
+            // let todotask = ctx.BindModelAsync<TodoTask>().Result
+            // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
+            let body = ctx.ReadBodyFromRequestAsync().Result
+            let todotask = JsonSerializer.Deserialize<TodoTask>(body, jsonOptions)
+            connection.ExecuteAsync(sql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
-            taskHolder.Add("task", task)
+            taskHolder.Add("task", todotask)
             do! Async.AwaitTask (connection.CloseAsync())
             return! json taskHolder next ctx
         }
@@ -69,11 +75,13 @@ let taskPutHandler : HttpHandler =
             let connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
-            let todotask = ctx.BindModelAsync<TodoTask>().Result // This will fail due to a bug in Giraffe
-            // A different way of doing the above:
+            // let todotask = ctx.BindModelAsync<TodoTask>().Result
+            // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
+            let body = ctx.ReadBodyFromRequestAsync().Result
+            let todotask = JsonSerializer.Deserialize<TodoTask>(body, jsonOptions)
             connection.ExecuteAsync(sql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
-            taskHolder.Add("task", task)
+            taskHolder.Add("task", todotask)
             do! Async.AwaitTask (connection.CloseAsync())
             return! json taskHolder next ctx
         }
