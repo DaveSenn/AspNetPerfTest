@@ -23,11 +23,11 @@ Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Kotlin - Jooby (Kooby) - **be_kotlin_jooby** (`gradle build`; `java -jar build/libs/TodoList-<version>.jar`)
 
-Python 3 - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
+Python - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
-Python 3 - Falcon **be_python_falcon** (`pip install -r requirements.txt`;`gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app`)
+Python - Falcon **be_python_falcon** (`pip install -r requirements.txt`;`gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app`)
 
-Python 3 - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvicorn server:app`)
+Python - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvicorn server:app`)
 
 ### setup:
 
