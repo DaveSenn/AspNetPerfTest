@@ -66,7 +66,7 @@ Optionally run `python initialize_db.py` in database/ to create the tasks table.
 You will need to install the Python headers (`apt install python-dev`) for the version of python you're running with Falcon.
 
 ### running:
-Start the db (bash database/run.sh).
+Start the db (database/run.sh).
 Pick a backend, run it, then start up the front end and away you go.
 
 ### tests:
@@ -78,6 +78,10 @@ something drastic like switching frameworks.
 
 In the case of this specific project, I found it wonderful to be able to add a
 new feature in each language/framework or refactor and have tests ready to go.
+
+**Note: You will need to run one of the backends to run these tests.**
+
+The test script will setup, run, and teardown the database for you.
 
 Run `test.sh` as follows:
 
