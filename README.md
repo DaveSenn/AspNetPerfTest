@@ -21,6 +21,8 @@ F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotne
 
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
+Kotlin - Jooby (Kooby) **be_kotlin_jooby** (`gradle build`; `java -jar build/libs/TodoList-0.0.1.jar`)
+
 Python - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
 Python - Falcon **be_python_falcon** (`pip install -r requirements.txt`;`gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app`)
