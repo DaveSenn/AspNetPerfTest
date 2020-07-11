@@ -34,12 +34,13 @@ Python - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvic
 Install requirements locally:
 
     Docker
-    Dotnet Core 3.0
-    Go 1.12+
+    Dotnet Core 3.1+
     Python 3.6+
         Pip 9.0+
+    OpenJDK 14
+        Gradle 6.5
     Node 10.15+
-    Rust 1.34+
+
 
 Setup postgres via docker (in the database directory).
 
