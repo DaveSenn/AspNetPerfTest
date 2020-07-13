@@ -87,14 +87,22 @@ The test script will setup, run, and teardown the database for you.
 Run `test.sh` as follows:
 
 ```
-./test.sh dotnet run --project tests/fs_expecto/fs_expecto.fsproj 
+./test.sh py.test
 ```
 
 or
 
 ```
-./test.sh py.test
+./test.sh gradle test -p tests/kt_junit/
 ```
+
+or
+
+```
+./test.sh dotnet run --project tests/fs_expecto/fs_expecto.fsproj 
+```
+
+
 
 ### status:
 This is just for messing around. I might spruce up the error handling, tests,
