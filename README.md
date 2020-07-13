@@ -93,7 +93,7 @@ Run `test.sh` as follows:
 or
 
 ```
-./test.sh gradle test -p tests/kt_junit/
+./test.sh gradle test -p tests/kt_junit/ --info
 ```
 
 or
