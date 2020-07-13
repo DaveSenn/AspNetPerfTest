@@ -23,6 +23,8 @@ Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Kotlin - Jooby (Kooby) **be_kotlin_jooby** (`gradle build`; `java -Xms100m -Xmx500m -jar build/libs/TodoList-0.0.1.jar`)
 
+Kotlin - Ktor **be_kotlin_ktor** (`gradle build`; `java -Xms100m -Xmx500m -jar build/libs/TodoList-0.0.1.jar`)
+
 Python - Sanic **be_python_sanic** (`pip install -r requirements.txt`; `python server.py`)
 
 Python - Falcon **be_python_falcon** (`pip install -r requirements.txt`;`gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app`)
