@@ -51,15 +51,8 @@ fun main(args: Array<String>) {
             get("/tasks") {
                 val future = connection.sendPreparedStatement("SELECT * FROM tasks ORDER BY priority asc")
                 val result = future.get()
-                val taskList = mutableListOf<TodoTask>()
-                for (row in result.rows) {
-                    taskList.add(
-                        TodoTask(
-                            id = row.getInt("id"),
-                            text = row.getString("text"),
-                            priority = row.getInt("priority")
-                        )
-                    )
+                val taskList = result.rows.map {
+                    Task(it.getInt("id"), it.getString("text"), it.getInt("priority"))
                 }
                 val tasks = mapOf(
                     "tasks" to taskList,
