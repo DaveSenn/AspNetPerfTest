@@ -32,14 +32,14 @@ let connectionString = String.Format(
 
 let taskDeleteHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
-        let connection =  new NpgsqlConnection(connectionString)
+        use connection =  new NpgsqlConnection(connectionString)
         connection.Execute("DELETE FROM tasks;") |> ignore
         text "ok" next ctx
 
 let taskGetHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
-            let connection =  new NpgsqlConnection(connectionString)
+            use connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("SELECT * FROM tasks ORDER BY priority asc"))
             let taskList = List.ofSeq results
@@ -55,7 +55,7 @@ let taskGetHandler : HttpHandler =
 let taskPostHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
-            let connection =  new NpgsqlConnection(connectionString)
+            use connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
             // let todotask = ctx.BindModelAsync<TodoTask>().Result
@@ -72,7 +72,7 @@ let taskPostHandler : HttpHandler =
 let taskPutHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
-            let connection =  new NpgsqlConnection(connectionString)
+            use connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
             // let todotask = ctx.BindModelAsync<TodoTask>().Result

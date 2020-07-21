@@ -5,7 +5,7 @@ A simple Todo List app with multiple backends.
 Each backend supports basic CRUD and enables permissive CORS for easy local dev.
 The frontend is independent of the backend used as long as it implements the 
 correct API.
-The tests are also independend of the backend used - so adding and validating a
+The tests are also independent of the backend used - so adding and validating a
 new backend is easy.
 
 ### frontend:
@@ -13,11 +13,11 @@ Javascript/Markup - React **fe_javascript_react** (run with `npm start`)
 
 ### backends:
 
-C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
+C# - Dotnet Core/Kestrel - **be_csharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;dotnet bin/Release/netcoreapp[version]/TodoList.dll`)
 
-F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
+F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet build --configuration Release;dotnet bin/Release/netcoreapp[version]/TodoList.dll`)
 
-F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotnet build --configuration Release;bin/Release/netcoreapp[version]/TodoList`)
+F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotnet build --configuration Release;dotnet bin/Release/netcoreapp[version]/TodoList.dll`)
 
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 

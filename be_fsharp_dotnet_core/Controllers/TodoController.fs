@@ -23,7 +23,7 @@ type TodoController (configuration:IConfiguration) =
     [<HttpGet>]
     member __.Get() : Task<TaskList> =
         async {            
-            let connection =  new NpgsqlConnection(_connectionString)
+            use connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc"))
             let tasks = {
@@ -38,7 +38,7 @@ type TodoController (configuration:IConfiguration) =
     [<HttpPost>]
     member __.Post(task: TodoTask) : Task<Dictionary<string,obj>> =
         async {
-            let connection =  new NpgsqlConnection(_connectionString)
+            use connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
@@ -52,7 +52,7 @@ type TodoController (configuration:IConfiguration) =
     [<HttpPut>]
     member __.Put(task: TodoTask) : Task<Dictionary<string,obj>> =
         async {
-            let connection =  new NpgsqlConnection(_connectionString)
+            use connection =  new NpgsqlConnection(_connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
             let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
             Async.AwaitTask (connection.ExecuteAsync(sql, task)) |> Async.RunSynchronously |> ignore
@@ -64,7 +64,7 @@ type TodoController (configuration:IConfiguration) =
 
     [<HttpDelete>]
     member __.Delete() =
-        let connection =  new NpgsqlConnection(_connectionString)
+        use connection =  new NpgsqlConnection(_connectionString)
         connection.Execute("DELETE FROM tasks;")
 
 [<ApiController>]
