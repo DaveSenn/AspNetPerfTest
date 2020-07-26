@@ -8,10 +8,14 @@ open FSharp.Control.Tasks.V2.ContextInsensitive
 open Giraffe
 open Dapper
 open Npgsql
+open SnazzGenerator
 open TodoList.Models
 
 let jsonOptions = JsonSerializerOptions()
 jsonOptions.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
+
+let insertSql = SnazzGen<TodoTask>("Id", "tasks").buildInsert()
+let updateSql = SnazzGen<TodoTask>("Id", "tasks").buildUpdate()
 
 let connectionString = String.Format(
                         "Host={0};Port={1};Username={2};Password={3};Database=todolist;",
@@ -47,12 +51,11 @@ let taskPostHandler : HttpHandler =
         task {
             use connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"INSERT INTO tasks (text, priority) VALUES (@Text, @Priority)"
             // let todotask = ctx.BindModelAsync<TodoTask>().Result
             // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
             let body = ctx.ReadBodyFromRequestAsync().Result
             let todotask = JsonSerializer.Deserialize<TodoTask>(body, jsonOptions)
-            connection.ExecuteAsync(sql, todotask).Result |> ignore
+            connection.ExecuteAsync(insertSql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", todotask)
             do! Async.AwaitTask (connection.CloseAsync())
@@ -64,12 +67,11 @@ let taskPutHandler : HttpHandler =
         task {
             use connection =  new NpgsqlConnection(connectionString)
             do! Async.AwaitTask (connection.OpenAsync())
-            let sql = @"UPDATE tasks SET text = '@Text', priority = @Priority WHERE id = @Id"
             // let todotask = ctx.BindModelAsync<TodoTask>().Result
             // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
             let body = ctx.ReadBodyFromRequestAsync().Result
             let todotask = JsonSerializer.Deserialize<TodoTask>(body, jsonOptions)
-            connection.ExecuteAsync(sql, todotask).Result |> ignore
+            connection.ExecuteAsync(updateSql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", todotask)
             do! Async.AwaitTask (connection.CloseAsync())
