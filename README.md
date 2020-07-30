@@ -19,6 +19,8 @@ F# - Dotnet Core/Kestrel - **be_fsharp_dotnet_core** (`dotnet run` or `dotnet bu
 
 F# - Giraffe/Dotnet Core/Kestrel - **be_fsharp_giraffe** (`dotnet run` or `dotnet build --configuration Release;dotnet bin/Release/netcoreapp[version]/TodoList.dll`)
 
+Go - Atreugo (Fasthttp) - **be_go_atreugo** (`go run server.go` or `go build;./todolist`)
+
 Javascript - Fastify **be_javascript_fastify** (`npm install`; `node server.js`)
 
 Kotlin - Jooby (Kooby) **be_kotlin_jooby** (`gradle build`; `java -Xms100m -Xmx500m -jar build/libs/TodoList-0.0.1.jar`)
@@ -36,9 +38,10 @@ Python - FastAPI **be_python_fastapi** (`pip install -r requirements.txt`; `uvic
 Install requirements locally:
 
     Docker
-    Dotnet Core 3.1+
+    Dotnet Core 3.1 or Dotnet 5.0+
     Python 3.6+
         Pip 9.0+
+    Go 1.14+
     OpenJDK 14
         Gradle 6.5
     Node 10.15+
