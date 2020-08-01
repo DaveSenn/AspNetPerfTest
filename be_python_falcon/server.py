@@ -31,13 +31,16 @@ class TaskResource:
         resp.body = json.dumps({'status': 'success'})
 
     def on_get(self, req, resp):
-        rows = self.engine.execute(
-            tasks.select().order_by(tasks.c.priority.asc())
-        ).fetchall()
+        limit = 10
+        page = int(req.params.get("page", 1))
+        offset = ((page - 1) * limit)
+        query = tasks.select().order_by(tasks.c.priority.asc())
+        query = query.limit(limit).offset(offset)
+        rows = self.engine.execute(query).fetchall()
         results = {
             'tasks': [],
-            'position': 0,
-            'length': len(rows),
+            'offset': offset,
+            'page': page,
         }
         for row in rows:
             results['tasks'].append({

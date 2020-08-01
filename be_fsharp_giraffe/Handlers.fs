@@ -24,6 +24,13 @@ let connectionString = String.Format(
                         Environment.GetEnvironmentVariable "DEV_PG_USER",
                         Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
 
+let getPageNumber(ctx: HttpContext) =
+    let page = ctx.GetQueryStringValue "page"
+    match page with
+    | Ok p -> 
+        p |> int
+    | Error _ -> 1
+
 let taskDeleteHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         use connection =  new NpgsqlConnection(connectionString)
@@ -34,13 +41,17 @@ let taskGetHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
             use connection =  new NpgsqlConnection(connectionString)
+            let limit = 10
+            let page = getPageNumber(ctx)
+            let offset = ((page - 1) * limit)
+            let sql = "SELECT * FROM tasks ORDER BY priority asc OFFSET " + offset.ToString() + " LIMIT " + limit.ToString()
             do! Async.AwaitTask (connection.OpenAsync())
-            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("SELECT * FROM tasks ORDER BY priority asc"))
+            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>(sql))
             let taskList = List.ofSeq results
             let tasks = {
                 Tasks=taskList;
-                Position=0;
-                Length=taskList.Length
+                Position=offset;
+                Page=page;
             }
             do! Async.AwaitTask (connection.CloseAsync())
             return! json tasks next ctx

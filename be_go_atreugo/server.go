@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 
 	_ "github.com/lib/pq"
 	"github.com/savsgio/atreugo/v11"
@@ -53,7 +54,14 @@ func delete_tasks(db *sql.DB, ctx *atreugo.RequestCtx) error {
 func get_tasks(db *sql.DB, ctx *atreugo.RequestCtx) error {
 	results := map[string]interface{}{}
 	var tasks []Task
-	rows, err := db.Query(`SELECT id, text, priority FROM tasks ORDER BY priority`)
+	var limit = 10
+	var page = ctx.QueryArgs().GetUintOrZero("page")
+	if page == 0 {
+		page = 1
+	}
+	var offset = ((page - 1) * limit)
+	var sql = `SELECT id, text, priority FROM tasks ORDER BY priority OFFSET ` + strconv.Itoa(offset) + " LIMIT " + strconv.Itoa(limit)
+	rows, err := db.Query(sql)
 	if err != nil {
 		panic(err)
 	}
@@ -67,8 +75,8 @@ func get_tasks(db *sql.DB, ctx *atreugo.RequestCtx) error {
 		tasks = append(tasks, task)
 	}
 	results["tasks"] = tasks
-	results["position"] = 0
-	results["len"] = len(tasks)
+	results["position"] = offset
+	results["page"] = page
 	return ctx.JSONResponse(results)
 }
 

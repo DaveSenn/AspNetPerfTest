@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Npgsql;
@@ -26,16 +25,20 @@ namespace TodoList.Controllers
 
         // GET tasks
         [HttpGet]
-        public async Task<ActionResult<Dictionary<string, dynamic>>> Get()
+        public async Task<ActionResult<Dictionary<string, dynamic>>> Get(int? page)
         {
             Dictionary<string, dynamic> tasks = new Dictionary<string, dynamic>();
             using (var connection = new NpgsqlConnection(_connectionString))
             {
+                var limit = 10;
+                if (page == null) { page = 1; }
+                var offset = ((page - 1) * limit);
                 await connection.OpenAsync();
-                IEnumerable<TodoTask> results = await connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc");
+                var sql = "Select * FROM tasks ORDER BY priority asc OFFSET " + offset.ToString() + " LIMIT " + limit.ToString();
+                IEnumerable<TodoTask> results = await connection.QueryAsync<TodoTask>(sql);
                 tasks.Add("tasks", results);
-                tasks.Add("position", 0);
-                tasks.Add("length", results.Count());
+                tasks.Add("position", offset);
+                tasks.Add("page", page);
             }
             return tasks;
         }

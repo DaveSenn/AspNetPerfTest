@@ -11,5 +11,5 @@ type TodoTask = {
 type TaskList = {
     Tasks : TodoTask list
     Position: int
-    Length: int
+    Page: int
 }

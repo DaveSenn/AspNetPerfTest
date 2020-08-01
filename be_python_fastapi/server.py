@@ -35,13 +35,17 @@ async def status_get():
 
 
 @app.get('/tasks')
-async def tasks_get():
-    rows = await database.fetch_all(query=tasks.select().order_by(
-        tasks.c.priority.asc()))
+async def tasks_get(page=1):
+    limit = 10
+    page = int(page)
+    offset = ((page - 1) * limit)
+    query = tasks.select().order_by(tasks.c.priority.asc())
+    query = query.limit(limit).offset(offset)
+    rows = await database.fetch_all(query)
     results = {
         'tasks': [],
-        'position': 0,
-        'length': len(rows),
+        'position': offset,
+        'page': page,
     }
     for row in rows:
         results['tasks'].append({

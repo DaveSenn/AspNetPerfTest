@@ -23,12 +23,15 @@ fastify.get('/status', async (request, reply) => {
 })
 
 fastify.get('/tasks', async (request, reply) => {
-  var results = {tasks: [], position: 0, len: 0}
+  var limit = 10
+  var page = 1;
+  if (request.query["page"] != null) { page = parseInt(request.query["page"]); }
+  var offset = ((page - 1) * limit);
   const client = await fastify.pg.connect()
-  const { rows } = await client.query('SELECT id, text, priority FROM tasks ORDER BY priority')
+  var sql = 'SELECT id, text, priority FROM tasks ORDER BY priority OFFSET ' + offset.toString() + " LIMIT " + limit.toString()
+  const { rows } = await client.query(sql)
   client.release()
-  results.len = rows.length
-  results.tasks = rows
+  var results = {tasks: rows, position: offset, page: page}
   reply.send(results)
 })
 

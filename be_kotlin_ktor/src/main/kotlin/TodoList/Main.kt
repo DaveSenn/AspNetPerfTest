@@ -49,15 +49,20 @@ fun main(args: Array<String>) {
                 call.respondText("ok", ContentType.Text.Plain)
             }
             get("/tasks") {
-                val future = connection.sendPreparedStatement("SELECT * FROM tasks ORDER BY priority asc")
+                val limit = 10
+                val page = (ctx.query.get("page")).intValue(1)
+                val offset = ((page - 1) * limit)
+                val sql = ("SELECT * FROM tasks ORDER BY priority asc OFFSET "
+                        + offset.toString() + " LIMIT " + limit.toString())
+                val future = connection.sendPreparedStatement(sql)
                 val result = future.get()
                 val taskList = result.rows.map {
                     TodoTask(it.getInt("id"), it.getString("text"), it.getInt("priority"))
                 }
                 val tasks = mapOf(
                     "tasks" to taskList,
-                    "position" to 0,
-                    "length" to result.rows.size
+                    "position" to offset,
+                    "page" to page
                 )
                 call.respondText(gson.toJson(tasks), contentType=ContentType.Application.Json)
             }

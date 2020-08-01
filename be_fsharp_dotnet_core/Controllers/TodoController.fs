@@ -4,7 +4,6 @@ open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open System
 open System.Collections.Generic
-open System.Linq
 open System.Threading.Tasks
 open Dapper
 open Npgsql
@@ -20,16 +19,22 @@ type TodoController (configuration:IConfiguration) =
                                     Environment.GetEnvironmentVariable "DEV_PG_USER",
                                     Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
 
-    [<HttpGet>]
-    member __.Get() : Task<TaskList> =
+    [<HttpGet()>]
+    member __.Get(page: int) : Task<TaskList> =
         async {            
             use connection =  new NpgsqlConnection(_connectionString)
+            let limit = 10
+            let page =
+                if (page > 0) then page
+                else 1
+            let offset = ((page - 1) * limit)
             do! Async.AwaitTask (connection.OpenAsync())
-            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>("Select * FROM tasks ORDER BY priority asc"))
+            let sql =  "Select * FROM tasks ORDER BY priority asc OFFSET " + offset.ToString() + " LIMIT " + limit.ToString()
+            let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>(sql))
             let tasks = {
                 Tasks=List.ofSeq results;
-                Position=0;
-                Length=results.Count()
+                Position=offset;
+                Page=page;
             }
             do! Async.AwaitTask (connection.CloseAsync())
             return tasks

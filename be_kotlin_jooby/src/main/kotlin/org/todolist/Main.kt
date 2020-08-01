@@ -4,11 +4,8 @@ import com.github.jasync.sql.db.Configuration
 import com.github.jasync.sql.db.ConnectionPoolConfiguration
 import com.github.jasync.sql.db.pool.ConnectionPool
 import com.github.jasync.sql.db.postgresql.pool.PostgreSQLConnectionFactory
-import io.jooby.CorsHandler
-import io.jooby.MediaType
-import io.jooby.cors
+import io.jooby.*
 import io.jooby.json.GsonModule
-import io.jooby.runApp
 import java.util.concurrent.TimeUnit
 
 data class Task (
@@ -52,15 +49,20 @@ fun main(args: Array<String>) {
             "ok"
         }
         get ("/tasks") {
-            val future = connection.sendPreparedStatement("SELECT * FROM tasks ORDER BY priority asc")
+            val limit = 10
+            val page = (ctx.query.get("page")).intValue(1)
+            val offset = ((page - 1) * limit)
+            val sql = ("SELECT * FROM tasks ORDER BY priority asc OFFSET "
+                        + offset.toString() + " LIMIT " + limit.toString())
+            val future = connection.sendPreparedStatement(sql)
             val result = future.get()
             val taskList = result.rows.map {
                 Task(it.getInt("id"), it.getString("text"), it.getInt("priority"))
             }
             val tasks = mapOf(
                 "tasks" to taskList,
-                "position" to 0,
-                "length" to result.rows.size
+                "position" to offset,
+                "page" to page
             )
             ctx.responseType = MediaType.json
             tasks

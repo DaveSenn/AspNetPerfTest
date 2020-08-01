@@ -1,0 +1,1 @@
+gunicorn --workers=8 --worker-class="egg:meinheld#gunicorn_worker" server:app

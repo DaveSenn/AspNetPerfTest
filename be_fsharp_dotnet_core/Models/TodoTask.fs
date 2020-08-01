@@ -9,5 +9,5 @@ type TodoTask (id, text, priority) =
 type TaskList = {
     Tasks : TodoTask list
     Position: int
-    Length: int
+    Page: int
 }
