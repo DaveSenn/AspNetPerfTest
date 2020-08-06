@@ -14,8 +14,8 @@ open TodoList.Models
 let jsonOptions = JsonSerializerOptions()
 jsonOptions.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
 
-let insertSql = SnazzGen<TodoTask>("Id", "tasks").buildInsert()
-let updateSql = SnazzGen<TodoTask>("Id", "tasks").buildUpdate()
+let insertSql = SnazzGen<TodoTask>("Id", "tasks").BuildInsert()
+let updateSql = SnazzGen<TodoTask>("Id", "tasks").BuildUpdate()
 
 let connectionString = String.Format(
                         "Host={0};Port={1};Username={2};Password={3};Database=todolist;",
