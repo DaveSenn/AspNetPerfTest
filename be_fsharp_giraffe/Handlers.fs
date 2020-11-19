@@ -2,6 +2,7 @@ module TodoList.Handlers
 
 open Microsoft.AspNetCore.Http
 open System
+open System.Threading.Tasks
 open System.Text.Json
 open System.Collections.Generic
 open FSharp.Control.Tasks.V2.ContextInsensitive
@@ -45,7 +46,7 @@ let taskGetHandler : HttpHandler =
             let page = getPageNumber(ctx)
             let offset = ((page - 1) * limit)
             let sql = "SELECT * FROM tasks ORDER BY priority asc OFFSET " + offset.ToString() + " LIMIT " + limit.ToString()
-            do! Async.AwaitTask (connection.OpenAsync())
+            do! connection.OpenAsync()
             let! results = Async.AwaitTask (connection.QueryAsync<TodoTask>(sql))
             let taskList = List.ofSeq results
             let tasks = {
@@ -53,7 +54,7 @@ let taskGetHandler : HttpHandler =
                 Position=offset;
                 Page=page;
             }
-            do! Async.AwaitTask (connection.CloseAsync())
+            do! connection.CloseAsync()
             return! json tasks next ctx
         }
 
@@ -61,7 +62,7 @@ let taskPostHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
             use connection =  new NpgsqlConnection(connectionString)
-            do! Async.AwaitTask (connection.OpenAsync())
+            do! connection.OpenAsync()
             // let todotask = ctx.BindModelAsync<TodoTask>().Result
             // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
             let body = ctx.ReadBodyFromRequestAsync().Result
@@ -69,7 +70,7 @@ let taskPostHandler : HttpHandler =
             connection.ExecuteAsync(insertSql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", todotask)
-            do! Async.AwaitTask (connection.CloseAsync())
+            do! connection.CloseAsync()
             return! json taskHolder next ctx
         }
 
@@ -77,7 +78,7 @@ let taskPutHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
             use connection =  new NpgsqlConnection(connectionString)
-            do! Async.AwaitTask (connection.OpenAsync())
+            do! connection.OpenAsync()
             // let todotask = ctx.BindModelAsync<TodoTask>().Result
             // ctx.BindModelAsync will fail due to a bug in Giraffe, so just do it manually instead:
             let body = ctx.ReadBodyFromRequestAsync().Result
@@ -85,7 +86,7 @@ let taskPutHandler : HttpHandler =
             connection.ExecuteAsync(updateSql, todotask).Result |> ignore
             let taskHolder = Dictionary<string, obj>()
             taskHolder.Add("task", todotask)
-            do! Async.AwaitTask (connection.CloseAsync())
+            do! connection.CloseAsync()
             return! json taskHolder next ctx
         }
 
