@@ -52,6 +52,7 @@ namespace TodoList.Controllers
                 await connection.OpenAsync();
                 var sql = @"INSERT into tasks (text, priority) VALUES (@Text, @Priority)";
                 await connection.ExecuteAsync(sql, task);
+                await connection.CloseAsync();
             }
             return new Dictionary<string, TodoTask>() {
                 { "task", task }
