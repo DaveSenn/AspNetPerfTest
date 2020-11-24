@@ -4,6 +4,7 @@ yarn.lock
 __pycache__
 target/
 go.sum
+bin/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
