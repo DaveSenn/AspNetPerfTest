@@ -1,18 +1,28 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace TodoList
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main( String[] args )
         {
-            CreateWebHostBuilder(args).Build().Run();
+            await CreateHostBuilder( args )
+                  .Build()
+                  .RunAsync();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls("http://localhost:8000");
+        private static IHostBuilder CreateHostBuilder( String[] args ) =>
+            Host
+                .CreateDefaultBuilder( args )
+                .ConfigureLogging( logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                } )
+                .ConfigureWebHostDefaults( webBuilder => webBuilder.UseStartup<Startup>() );
     }
 }

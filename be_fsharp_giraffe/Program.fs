@@ -79,7 +79,7 @@ let main _ =
         .Configure(Action<IApplicationBuilder> configureApp)
         .ConfigureServices(configureServices)
         .ConfigureLogging(configureLogging)
-        .UseUrls("http://localhost:8000")
+        .UseUrls("http://localhost:5023")
         .Build()
         .Run()
     0

@@ -18,12 +18,7 @@ jsonOptions.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
 let insertSql = SnazzGen<TodoTask>("Id", "tasks").BuildInsert()
 let updateSql = SnazzGen<TodoTask>("Id", "tasks").BuildUpdate()
 
-let connectionString = String.Format(
-                        "Host={0};Port={1};Username={2};Password={3};Database=todolist;",
-                        Environment.GetEnvironmentVariable "DEV_PG_HOST",
-                        Environment.GetEnvironmentVariable "DEV_PG_PORT",
-                        Environment.GetEnvironmentVariable "DEV_PG_USER",
-                        Environment.GetEnvironmentVariable "DEV_PG_PASSWORD")
+let connectionString = "Host=localhost;Port=5432;Username=postgres;Password=123456;Database=todolist;"
 
 let getPageNumber(ctx: HttpContext) =
     let page = ctx.GetQueryStringValue "page"

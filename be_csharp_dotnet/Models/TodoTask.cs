@@ -1,10 +1,11 @@
+using System;
+
 namespace TodoList.Models
 {
-    // Naming TodoTask to avoid name conflict with threading Task
     public class TodoTask
     {
-        public int Id { get; set; }
-        public string Text { get; set; }
-        public int Priority { get; set; }
+        public Int32 Id { get; set; }
+        public String Text { get; set; }
+        public Int32 Priority { get; set; }
     }
 }
